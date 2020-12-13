@@ -1,0 +1,24 @@
+#include <stdio.h>
+int main()
+{
+	int x, n;
+	int a[10] = { 0 };
+	scanf("%d %d", &x, &n);
+	for (int i = x; i <= n; i++)
+	{
+		int y = i;
+		while (y)
+		{
+			for (int j = 0; j < 10; j++)
+			{
+				if (y % 10 == j) a[j]++;
+			}
+			y /= 10;
+		}
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		printf("%d ", a[i]);
+	}
+	return 0;
+}
