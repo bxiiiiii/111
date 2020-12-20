@@ -20,7 +20,7 @@ struct ListNode* removeNthFromEnd(struct ListNode* head, int n){
     if(i == 1) return NULL;
     for (int x = 0; p; m = p,p = p->next, x++)
     {
-        if(x == i - n )
+        if(x == i - n)
         {
             if(m)
             {
