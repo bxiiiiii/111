@@ -1,0 +1,36 @@
+void get(int* next, const char* str)
+{
+	int j = -1;
+	next[0] = j;
+	for (int i = 1; i < strlen(str); i++)
+	{
+		while (j >= 0 && str[i] != str[j + 1])
+		{
+			j = next[j];
+		}
+		if (str[i] == str[j + 1])
+		{
+			j++;
+		}
+		next[i] = j;
+	}
+}
+
+int strStr(char * haystack, char * needle){
+    if(strlen(needle)==0) return 0;
+    int j = -1;
+    int next[strlen(needle)];
+    get(next, needle);
+    for (int i = 0; i < strlen(haystack); i++)
+    {
+        while(j >= 0 && haystack[i] != needle[j + 1])
+        {
+            j = next[j];
+        }
+        if(haystack[i] == needle[j + 1])
+            j++;
+        if(j == strlen(needle) - 1)
+            return i + 1 - strlen(needle);
+    }
+    return -1;
+}

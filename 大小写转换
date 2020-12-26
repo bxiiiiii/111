@@ -1,0 +1,13 @@
+#include<stdio.h>
+int main()
+{
+	char arr[100];
+	fgets(arr, 100, stdin);
+	for (int i = 0; arr[i] != '\0'; i++)
+	{
+		if (arr[i] > 96 && arr[i] < 123)
+			arr[i] = arr[i] - 32;
+	}
+	fputs(arr, stdout);
+	return 0;
+}
