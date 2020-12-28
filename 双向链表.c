@@ -5,7 +5,7 @@ typedef struct _node
 {
 	int id;
 	struct _node *fnext;
-	struct _list *lnext;
+	struct _node *lnext;
 }Node;
 
 typedef struct _list
