@@ -55,9 +55,9 @@ void creat(List* plist)
 
 void print(List* plist)
 {
-	Node* p = plist->head->fnext;
+	Node* p = plist->head->lnext;
 	printf("内容为:\n");
-	for (; p; p = p->fnext)
+	for (; p != plist->head; p = p->lnext)
 	{
 		printf("%d\n", p->id);
 	}
@@ -67,14 +67,15 @@ void print(List* plist)
 void del(List* plist)
 {
 	int i, ice = 0;
-	Node* p = plist->head->fnext;
+	Node* p = plist->head->lnext;
 	Node* q = plist->head;
 	printf("输入删除内容:");
 	scanf_s("%d", &i);
-	for (; p; q = p, p = p->fnext)
+	for (; p != plist->head; q = p, p = p->lnext)
 	{
 		if (p->id == i)
 		{
+			ice = 1;
 			q->lnext = p->lnext;
 			p->lnext->fnext = q;
 			free(p);
@@ -87,13 +88,13 @@ void del(List* plist)
 
 void cut(List* plist)
 {
-	Node* q = plist->head->fnext;
-	for (; q; )
+	Node* q = plist->head->lnext;
+	for (; q != plist->head; )
 	{
-		plist->head->fnext = q->fnext;
+		plist->head->lnext = q->lnext;
 		free(q);
-		q = plist->head->fnext;
+		q = plist->head->lnext;
 	}
-	if (plist->head->fnext == NULL) printf("yes\n");
+	if (plist->head->lnext == plist->head) printf("yes\n");
 	else printf("No\n");
 }
