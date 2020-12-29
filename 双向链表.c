@@ -4,8 +4,8 @@
 typedef struct _node
 {
 	int id;
-	struct _node *fnext;
-	struct _node *lnext;
+	struct _node* fnext;
+	struct _node* lnext;
 }Node;
 
 typedef struct _list
@@ -14,7 +14,7 @@ typedef struct _list
 	Node* tail;
 }List;
 
-void creat(List *plist);
+void creat(List* plist);
 void del(List* plist);
 void print(List* plist);
 void cut(List* plist);
@@ -30,7 +30,7 @@ int main()
 	return 0;
 }
 
-void creat(List *plist)
+void creat(List* plist)
 {
 	Node* q = (Node*)malloc(sizeof(Node));
 	plist->head = plist->tail = q;
@@ -39,8 +39,8 @@ void creat(List *plist)
 	printf("输入-1停止:\n");
 	do
 	{
-		scanf("%d",&i);
-		if(i != -1)
+		scanf_s("%d", &i);
+		if (i != -1)
 		{
 			Node* p = (Node*)malloc(sizeof(Node));
 			p->id = i;
@@ -49,15 +49,15 @@ void creat(List *plist)
 			plist->tail->lnext = p;
 			plist->tail = p;
 		}
-	}while(i != -1);
-	
+	} while (i != -1);
+
 }
 
 void print(List* plist)
 {
-	Node* p = plist->head->fnext;
+	Node* p = plist->head->lnext;
 	printf("内容为:\n");
-	for ( ; p; p = p->fnext)
+	for (; p; p = p->lnext)
 	{
 		printf("%d\n", p->id);
 	}
@@ -67,46 +67,35 @@ void print(List* plist)
 void del(List* plist)
 {
 	int i, ice = 0;
-	Node* p = plist->head->fnext;
+	Node* p = plist->head->lnext;
 	Node* q = plist->head;
 	printf("输入删除内容:");
-	scanf("%d", &i);
-	for (; p; q = p, p = p->fnext)
+	scanf_s("%d", &i);
+	for (; p; q = p, p = p->lnext)
 	{
-		if(p->id == i)
+		if (p->id == i)
 		{
+			ice = 1;
 			q->lnext = p->lnext;
-			p->lnext->fnext = q;
+			if (q->lnext != NULL)
+				p->lnext->fnext = q;
 			free(p);
 			break;
 		}
 	}
-	if(ice) print(plist);
+	if (ice) print(plist);
 	else printf("NO\n");
 }
 
 void cut(List* plist)
 {
-	printf("111");
-	Node* q = plist->head->fnext;
+	Node* q = plist->head->lnext;
 	for (; q; )
 	{
-		plist->head->fnext = q->fnext;
+		plist->head->lnext = q->lnext;
 		free(q);
-		q = plist->head->fnext;
+		q = plist->head->lnext;
 	}
-	if(plist->head->fnext == NULL) printf("yes\n");
+	if (plist->head->lnext == NULL) printf("yes\n");
 	else printf("No\n");
 }
-
-
-
-
-
-
-
-
-
-
-
-
