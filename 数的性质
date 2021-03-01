@@ -1,0 +1,12 @@
+#include <stdio.h>
+int main()
+{
+	int a, b, c, d, e;
+	scanf("%d", &a);
+	if (!(a & 1) && (a > 4 && a <= 12)) b = 1; else b = 0;
+	if (!(a & 1) || (a > 4 && a <= 12)) c = 1; else c = 0;
+	if (!(a & 1)^(a > 4 && a <= 12)) d = 1; else d = 0;
+	if ((a & 1) && (a <= 4 || a > 12)) e = 1; else e = 0;
+	printf("%d %d %d %d", b, c, d, e);
+	return 0;
+}
