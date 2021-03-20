@@ -10,6 +10,7 @@
 #include <grp.h>
 #include <pwd.h>
 #include <errno.h>
+#include <signal.h>
 
 #define _NONE 0
 #define _A 1
@@ -40,7 +41,8 @@ int main(int argc, char** argv)
     int i, k, j = 0, num = 0;
     struct stat buf;
 
-    //
+    signal(SIGINT, SIG_IGN);
+
     for(i = 1; i < argc; i++)
     {
         if(argv[i][0] == '-')
@@ -136,6 +138,7 @@ void display_r(int flag_param,char* filename)
             name[j++] = filename[i];
         }
         name[j] = '\0';
+        
         switch (flag_param){
             case _NONE :
                 if(name[0] != '.') display_dir(flag_param,filename);
@@ -264,6 +267,7 @@ void display_1(char* name, char* filename)
         printf("\n");
         g_leave_len = MAXROWLEN;
     }
+    
     len = strlen(name);
     len = g_maxlen - len;
 
@@ -383,14 +387,12 @@ int get_color(char* filename)
 
     if(lstat(filename, &buf) == -1) my_err("stat", __LINE__);
 
-    if((buf.st_mode & S_IXOTH) || (buf.st_mode & S_IXUSR) || (buf.st_mode & S_IXGRP))
-        color = 32;
+    if(S_ISDIR(buf.st_mode))
+        color = 34;
     else if(S_ISLNK(buf.st_mode)){
         color = 36;
     }else if(S_ISREG(buf.st_mode)){
         color = 37;
-    }else if(S_ISDIR(buf.st_mode)){
-        color = 34;
     }else if(S_ISCHR(buf.st_mode)){
         color = 33;
     }else if(S_ISBLK(buf.st_mode)){
@@ -399,10 +401,14 @@ int get_color(char* filename)
         color = 35;
     }else if(S_ISSOCK(buf.st_mode)){
         color = 35;
+    }else if((buf.st_mode & S_IXOTH) || (buf.st_mode & S_IXUSR) || (buf.st_mode & S_IXGRP))
+    {
+        color = 32;
     }
 
     return color;
 }
+
 
 void quicksort(char **a, int left, int right)
 {
