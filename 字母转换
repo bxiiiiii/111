@@ -1,8 +1,0 @@
-#include <stdio.h>
-int main()
-{
-    char x = getchar();
-
-    printf("%c", x - 32);
-        return 0;
-}
