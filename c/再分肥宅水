@@ -1,0 +1,9 @@
+#include <stdio.h>
+int main()
+{
+	double n;
+	int t;
+	scanf("%lf %d", &n, &t);
+	printf("%.3f\n%d", n / t, t * 2);
+	return 0;
+}

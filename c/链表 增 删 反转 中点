@@ -1,0 +1,191 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct _node
+{
+	int id;
+	int value;
+	struct _node* next;
+}Node;
+typedef struct _list
+{
+	Node* head;
+	Node* tail;
+}List;
+
+void add(List* plist); //增
+void print(List* plist); 
+void cut(List* plist);	//删
+void reverse(List* plist);	//反转--三指针
+void mid(List* plist);	//找中点--快慢双指针
+void _free(List* plist);
+
+int main()
+{
+	List list;
+	add(&list);
+	print(&list);
+	cut(&list);
+	reverse(&list);
+	mid(&list);
+	_free(&list);
+
+	return 0;
+}
+
+void add(List* plist)
+{
+	printf("输入id为-1即停止输入\n");
+	plist->head = plist->tail = NULL;
+	int i, v;
+	do
+	{
+		printf("请输入id:");
+		scanf_s("%d", &i);
+		if (i != -1)
+		{
+			printf("请输入value:");
+			scanf_s("%d", &v);
+			Node* p = (Node*)malloc(sizeof(Node));
+			if (!p)
+			{
+				printf("False");
+				exit(1);
+			}
+			p->id = i;
+			p->value = v;
+			p->next = NULL;
+			if (plist->head)
+			{
+				plist->tail->next = p;
+			}
+			else
+			{
+				plist->head = p;
+			}
+			plist->tail = p;
+		}
+	} while (i != -1);
+}
+
+void print(List* plist)
+{
+	Node* q = plist->head;
+	printf("id\tvalue\n");
+	for (; q; q = q->next)
+	{
+		printf("%d\t%d\n", q->id, q->value);
+	}
+	printf("\n");
+}
+
+void cut(List* plist)
+{
+	Node* q = plist->head;
+	Node* p = NULL;
+	int i, ice = 0;
+	printf("请输入要删除的id:");
+	scanf_s("%d", &i);
+	for (; q; p = q, q = q->next)
+	{
+		if (q->id == i)
+		{
+			ice = 1;
+			if (p)
+			{
+				p->next = q->next;
+				if (p->next == NULL)
+				{
+					plist->tail = p;
+				}
+			}
+			else
+			{
+				plist->head = q->next;
+			}
+			free(q);
+			break;
+		}
+	}
+	if (ice)
+	{
+		print(plist);
+	}
+	else
+	{
+		printf("无此项\n");
+	}
+	printf("\n");
+}
+
+void reverse(List* plist)
+{
+	Node* p = NULL;
+	Node* q = plist->head;
+	Node* m = plist->head->next;
+	plist->head = plist->tail;
+	printf("反转后:\n");
+	while (1)
+	{
+		if (p)
+		{
+			q->next = p;
+			p = q;
+		}
+		else
+		{
+			p = q;
+			q->next = NULL;
+		}
+		if (m->next == NULL)
+		{
+			m->next = q;
+			break;
+		}
+		q = m;
+		m = m->next;
+	}
+	print(plist);
+}
+void mid(List* plist)
+{
+	Node* q = plist->head;
+	Node* p = plist->head;
+	printf("中点为:\n");
+	while (1)
+	{
+		if (q->next == NULL)
+		{
+			printf("id : %d\tvalue = %d\n", p->id, p->value);
+			break;
+		}
+		if (q->next != NULL && q->next->next == NULL)
+		{
+			printf("id : %d\tvalue = %d\n", p->id, p->value);
+			printf("id : %d\tvalue = %d\n", p->next->id, p->next->value);
+			break;
+		}
+		q = q->next->next;
+		p = p->next;
+	}
+	printf("\n");
+}
+
+void _free(List* plist)
+{
+	Node* q = plist->head;
+	Node* p = NULL;
+	for (; q; q = p)
+	{
+		p = q->next;
+		free(q);
+	}
+	if (q)
+	{
+		printf("NO FREE");
+	}
+	else
+	{
+		printf("GET FREE");
+	}
+}

@@ -1,0 +1,36 @@
+#include <stdio.h>
+int main()
+{
+	char a[25*2500];
+	int w = 0;
+	int l = 0；
+	fgets(a, 25*2500, stdin);
+	for (int i = 0; a[i] != 'E'; i++)
+	{
+		if(a[i] == 'W') w++;
+		else l++;
+		if(w + l == 11)
+		{
+			printf("%d:%d\n",w,l);
+			w = 0;
+			l = 0;
+		}
+	}
+	printf("\n");
+	int W = 0;
+	int L = 0;
+	for (int i = 0; a[i] != 'E'; i++)
+        {
+                if(a[i] == 'W') W++;
+                else L++;
+                if(W + L == 21)
+                {
+                        printf("%d:%d",W,L);
+                        W = 0;
+                        L = 0;
+                }
+        }
+
+	return 0;
+
+}

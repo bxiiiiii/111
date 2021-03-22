@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int isprime(int a)
+{
+	if (a % 2 == 0) return 0;
+	for (int j = 3; j < a; j += 2)
+	{
+		if (a % j == 0) return 0;
+	}
+	return 1;
+}
+
+int main()
+{
+	int a, b;
+	scanf("%d %d", &a, &b);
+	for (int i = a; i <= b; i++)
+	{
+		if (isprime(i))
+		{
+			int t = i;
+			int y = i;
+			int c = 0;
+			while (y)
+			{
+				c = c * 10 + y % 10;
+				y /= 10;
+			}
+			if (t == c) printf("%d\n", t);
+		}
+	}
+	return 0;
+}

@@ -1,0 +1,15 @@
+#include <stdio.h>
+int main()
+{
+	int s1, s2, e1, e2;
+	scanf("%d %d %d %d", &s1, &e1, &s2, &e2);
+	int min = e2 - e1;
+	int hour = s2 - s1;
+	if (min < 0) 
+	{
+		hour -= 1;
+		min += 60;
+	}
+	printf("%d %d", hour, min);
+	return 0;
+}

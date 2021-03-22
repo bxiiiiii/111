@@ -1,0 +1,117 @@
+#include <stdio.h>
+  2 #include <stdlib.h>
+  3 
+  4 typedef struct _node
+  5 {   
+  6     int id;
+  7     int value;
+  8     struct _node* next;
+  9 }Node;
+ 10 typedef struct _list
+ 11 {   
+ 12     Node* head;
+ 13     Node* tail;
+ 14 }List;
+ 15 
+ 16 
+ 17 void creat(List* plist);
+ 18 void print(List* plist);
+ 19 Node* getmid(List* plist);
+ 20 int getlen(List* plist);
+ 21 void _free(List* plist);
+ 22 
+ 23 int main()
+ 24 {   
+ 25     List list;
+ 26     creat(&list);
+ 27     print(&list);
+ 28     printf("长度为%d\n", getlen(&list));
+ 29     Node* m = getmid(&list);
+ 30     printf("id = %d, value = %d\n", m->id, m->value);
+ 31     _free(&list);
+ 32     
+ 33     return 0;
+ 34 }
+ 35 void creat(List* plist)
+ 37 {   
+ 38     printf("输入id为-1即停止输入\n");
+ 39     plist->head = plist->tail = NULL;
+ 40     int i, v;
+ 41     do
+ 42     {
+ 43         printf("请输入id:");
+ 44         scanf("%d", &i);
+ 45         if (i != -1)
+ 46         {
+ 47             printf("请输入value:");
+ 48             scanf("%d", &v);
+ 49             Node* p = (Node*)malloc(sizeof(Node));
+ 50             if (!p)
+ 51             {
+ 52                 printf("False");
+ 53                 exit(1);
+ 54             }
+                                 p->id = i;
+ 56             p->value = v;
+ 57             p->next = NULL;
+ 58             if (plist->head)
+ 59             {
+ 60                 plist->tail->next = p;
+ 61             }
+ 62             else
+ 63             {
+ 64                 plist->head = p;
+ 65             }
+ 66             plist->tail = p;
+ 67         }
+ 68     } while (i != -1);
+ 69 }
+ 70 
+ 71 void print(List* plist)
+ 72 {
+ 73     Node* q = plist->head;
+ 74     printf("id\tvalue\n");
+ 75     for (; q; q = q->next)
+ 76     {
+ 77         printf("%d\t%d\n", q->id, q->value);
+ 78     }
+ 79     printf("\n");
+ 80 }
+ 81 
+ 82 Node* getmid(List* plist)
+ 83 {
+ 84     Node* q = plist->head;
+ 85     Node* p = plist->head;
+ 86     for (; p->next->next != NULL && p->next != NULL; q = q->next, p = p->next->next)
+ 87     {
+ 88 
+ 89     }
+ 90     return q;
+ 91 }
+ 92 
+ 93 int getlen(List* plist)
+ 94 {
+ 95     int len = 0;
+ 96     Node* p = plist->head;
+ 97     for(; p; p = p->next)
+ 98     {
+ 99         len++;
+100     }
+101     re     urn len;
+102 }
+103 
+104 void _free(List* plist)
+105 {
+106     Node* q = plist->head;
+107     Node* p = NULL;
+108     for (; q; q = p)
+109     {
+110         p = q->next;
+111         free(q);
+112     }
+113     if (q) printf("NO FREE\n");
+114     else printf("GET FREE\n");
+115 }
+                                                        33,1-4       顶端
+
+
