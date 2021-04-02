@@ -19,7 +19,7 @@
 #define MAXROWLEN 80
 
 int g_leave_len = MAXROWLEN;
-int g_maxlen;
+int filename_max;
 int _R = 0;
 
 void my_err(const char* err_string, int line); 
@@ -174,11 +174,9 @@ void display(int flag_param, char* filename)
     }
     name[j] = '\0';
 
-    if(lstat(filename, &buf) == -1) 
-    {
-        printf("***%s\n", filename);
-        my_err("stat", __LINE__);
-    }
+
+    if(lstat(filename, &buf) == -1) my_err("stat", __LINE__);
+
     switch (flag_param){
         case _NONE :
             if(name[0] != '.') display_1(name, filename);
@@ -204,6 +202,7 @@ void display_dir(int flag_param, char* path)
     struct dirent* ptr;
     int filesnum = 0;
     int len = strlen(path);
+    filename_max = 0;
 
     dir = opendir(path);
 
@@ -213,8 +212,10 @@ void display_dir(int flag_param, char* path)
         perror("opendir");
     }
     else{
-        while((ptr = readdir(dir)) != NULL)
+        while((ptr = readdir(dir)) != NULL) 
         {
+            if(filename_max < strlen(ptr->d_name)) 
+            filename_max = strlen(ptr->d_name);
             filesnum ++;
         }
         closedir(dir);
@@ -266,24 +267,23 @@ void display_dir(int flag_param, char* path)
 
 void display_1(char* name, char* filename)
 {
-    int i , len;
-    if(g_leave_len < g_maxlen)
+    int i, len;
+    if(g_leave_len < filename_max)
     {
         printf("\n");
         g_leave_len = MAXROWLEN;
     }
-    
-    len = strlen(name);
-    len = g_maxlen - len;
 
     int color = get_color(filename);
-    printf("\033[%dm%s\033[0m\t", color, name);
+    printf("\033[%dm%s\033[0m", color, name);
 
+    len = filename_max - strlen(name);
     for(i = 0; i < len; i++)
     {
-        printf("  ");
-        g_leave_len -= (g_maxlen + 2);
+        printf(" ");
     }
+    printf("  ");
+    g_leave_len -= (filename_max+2);
 }
 
 void display_attribute(struct stat buf, char * name, char* filename)
@@ -396,8 +396,6 @@ int get_color(char* filename)
         color = 34;
     else if(S_ISLNK(buf.st_mode)){
         color = 36;
-    }else if(S_ISREG(buf.st_mode)){
-        color = 37;
     }else if(S_ISCHR(buf.st_mode)){
         color = 33;
     }else if(S_ISBLK(buf.st_mode)){
@@ -406,11 +404,11 @@ int get_color(char* filename)
         color = 35;
     }else if(S_ISSOCK(buf.st_mode)){
         color = 35;
-    }else if((buf.st_mode & S_IXOTH) || (buf.st_mode & S_IXUSR) || (buf.st_mode & S_IXGRP))
-    {
+    }else if((buf.st_mode & S_IXOTH) || (buf.st_mode & S_IXUSR) || (buf.st_mode & S_IXGRP)){
         color = 32;
+    }else if(S_ISREG(buf.st_mode)){
+        color = 37;
     }
-
     return color;
 }
 
