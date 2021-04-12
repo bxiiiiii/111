@@ -24,7 +24,7 @@ int main()
 
     socklen_t caddr_len = sizeof(caddr_len);
 
-    socklen_t c_sock_fd = accept(s_sock_fd, (struct sockaddr*)&caddr,&caddr_len);
+    int c_sock_fd = accept(s_sock_fd, (struct sockaddr*)&caddr,&caddr_len);
 
 while(1){
     ret = read(c_sock_fd, buf, sizeof(buf));
