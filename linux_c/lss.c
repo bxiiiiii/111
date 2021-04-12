@@ -155,6 +155,7 @@ void display_r(int flag_param,char* filename)
                 break;
         } 
     }
+    else free(filename);
 }
 
 void display(int flag_param, char* filename)
@@ -284,6 +285,9 @@ void display_1(char* name, char* filename)
     }
     printf("  ");
     g_leave_len -= (filename_max+2);
+
+    //if(_R == 0) free(filename);
+
 }
 
 void display_attribute(struct stat buf, char * name, char* filename)
@@ -376,6 +380,8 @@ void display_attribute(struct stat buf, char * name, char* filename)
     printf("\033[%dm%s\033[0m", color, name);
 
     printf("\n");
+
+    //if(_R == 0) free(filename);
 }
 
 void my_err(const char* err_string, int line)
