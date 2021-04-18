@@ -1,0 +1,25 @@
+int max(int i, int j)
+{
+    return i>j?i:j;
+}
+int rob(int* nums, int numsSize){
+    if(numsSize==1)
+        return nums[0];
+        
+    int pre = 0, cur = 0;
+    for(int i = 0; i < numsSize-1; i++)
+    {
+        int tem = cur;
+        cur = max(pre+nums[i], cur);
+        pre = tem;
+    }
+
+    int pre2 = 0, cur2 = 0;
+    for(int i = 1; i < numsSize; i++)
+    {
+        int tem = cur2;
+        cur2 = max(pre2+nums[i], cur2);
+        pre2 = tem;
+    }
+    return max(cur2, cur);
+}
