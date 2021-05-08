@@ -1,5 +1,12 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define true 1
+#define false 0
+
 typedef struct Trie{
-    bool isend;
+    int isend;
     struct Trie *children[26];
 } Trie;
 
@@ -25,7 +32,7 @@ void trieInsert(Trie* obj, char * word) {
 }
 
 /** Returns if the word is in the trie. */
-bool trieSearch(Trie* obj, char * word) {
+int trieSearch(Trie* obj, char * word) {
     int len = strlen(word);
     for (int i = 0; i < len; i++) {
         int ch = word[i] - 'a';
@@ -37,7 +44,7 @@ bool trieSearch(Trie* obj, char * word) {
     return obj->isend;
 }
 /** Returns if there is any word in the trie that starts with the given prefix. */
-bool trieStartsWith(Trie* obj, char * prefix) {
+int trieStartsWith(Trie* obj, char * prefix) {
     int len = strlen(prefix);
     for (int i = 0; i < len; i++) {
         int ch = prefix[i] - 'a';
@@ -59,14 +66,32 @@ void trieFree(Trie* obj) {
     free(obj);
 }
 
-/**
- * Your Trie struct will be instantiated and called as such:
- * Trie* obj = trieCreate();
- * trieInsert(obj, word);
- 
- * bool param_2 = trieSearch(obj, word);
- 
- * bool param_3 = trieStartsWith(obj, prefix);
- 
- * trieFree(obj);
-*/
+int main()
+{
+    Trie *trie;
+    trie = trieCreate();
+    char words[100];
+    while(1)
+    {
+        printf("*");
+        memset(words, 0, sizeof(words));
+        scanf("%s", words);
+        if(!strcmp(words, "exit"))
+            break;
+        trieInsert(trie, words);
+    }
+    while(1)
+    {
+        printf("**");
+        memset(words, 0, sizeof(words));
+        scanf("%s", words);
+        if(!strcmp(words, "exit"))
+            break;
+        int ice = trieSearch(trie, words);
+        if(ice) printf("yes\n");
+        else printf("no\n");
+    }
+
+    trieFree(trie);
+    return 0;
+}
