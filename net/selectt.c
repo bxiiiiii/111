@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <ctype.h>
+#include <string.h>
 
 int main()
 {
@@ -15,6 +16,7 @@ int main()
     char buf[BUFSIZ];
     socklen_t clen;
 
+	bzero(&saddr, sizeof(saddr));
     saddr.sin_family = AF_INET;
     saddr.sin_port = htons(9999);
     saddr.sin_addr.s_addr = htonl(INADDR_ANY);
