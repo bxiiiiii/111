@@ -45,9 +45,11 @@ int main()
 			for(i = 1; i < OPEN_MAX; i++)
 			{
 				if(client[i].fd < 0)
+				{
 					client[i].fd = cfd;
 					client[i].events = POLLIN;
 					break;
+				}
 			}
 
 			if(maxi < i)
@@ -84,5 +86,4 @@ int main()
 
 	close(lfd);
 	return 0;
-
 }
