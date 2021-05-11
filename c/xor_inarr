@@ -1,0 +1,12 @@
+int xorOperation(int n, int start){
+    int re = 0;
+    int a = 0;
+    for(int i = 0; i < n; i++)
+    {
+        re = start + 2*i;
+        re ^= a;
+        a = re;
+    }
+
+    return re;
+}
