@@ -75,7 +75,7 @@ void *consumer1()
 	while(1)
 		{
 			pthread_mutex_lock(&mutex);
-			if(head == NULL)
+			while(head == NULL)
 				{
 					printf("minmin1\n");
 					pthread_cond_wait(&cond, &mutex);
@@ -99,7 +99,7 @@ void *consumer2()
 	while(1)
 		{
 			pthread_mutex_lock(&mutex);
-			if(head == NULL)
+			while(head == NULL)
 				{
 					printf("minmin2\n");
 					pthread_cond_wait(&cond, &mutex);
