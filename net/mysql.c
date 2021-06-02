@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <mysql.h>
+#include <mysql/mysql.h>
 #include <error.h>
 
 int main()
@@ -27,16 +27,19 @@ int main()
 
     	printf("连接mysql数据库成功!\n");
 
-    int ret =  mysql_query(&mysql,"select friend from friends where owner = 1");
+	int id=1;
+	char buf[100];
+	sprintf(buf, "select id from stu_info where id = %d", id);
+	
+    int ret =  mysql_query(&mysql,buf);
     if(ret)
         perror("query fail");
 
     MYSQL_RES *result = mysql_store_result(&mysql);
     unsigned int num_fields = mysql_num_fields(result);
-    printf("*%d\n", num_fields);
 
     MYSQL_FIELD *field;
-    while ( (field = mysql_fetch_field(result)))
+  /*  while ( (field = mysql_fetch_field(result)))
 	    printf("%-20s", field->name);
 
     printf("\n");
@@ -47,8 +50,14 @@ int main()
 	    for (int i = 0; i < num_fields; i++)
 		    printf("%-20s", row[i]);
 	    printf("\n");
-    }
+    }*/
 
+	MYSQL_ROW row = mysql_fetch_row(result);
+		
+	if(row != NULL)
+		printf("%s\n", row[0]);
+	else
+	printf("no");
 
 	mysql_close(&mysql);
 	mysql_library_end();
