@@ -15,7 +15,7 @@ int main()
 		printf("mysql_library_init");
 	}
 
-	if(NULL == mysql_real_connect(&mysql, "127.0.0.1", "root", "1551097460", "test", 0, NULL, 0)){
+	if(NULL == mysql_real_connect(&mysql, "127.0.0.1", "root", "1551097460", "bxchat", 0, NULL, 0)){
    
 		printf("mysql_real_connect");
 	}
@@ -27,7 +27,7 @@ int main()
 
     	printf("连接mysql数据库成功!\n");
 
-	int id=1;
+	/*int id=1;
 	char buf[100];
 	sprintf(buf, "select id from stu_info where id = %d", id);
 	
@@ -39,7 +39,8 @@ int main()
     unsigned int num_fields = mysql_num_fields(result);
 
     MYSQL_FIELD *field;
-  /*  while ( (field = mysql_fetch_field(result)))
+    
+	//while ( (field = mysql_fetch_field(result)))
 	    printf("%-20s", field->name);
 
     printf("\n");
@@ -50,14 +51,19 @@ int main()
 	    for (int i = 0; i < num_fields; i++)
 		    printf("%-20s", row[i]);
 	    printf("\n");
-    }*/
+    }//
 
 	MYSQL_ROW row = mysql_fetch_row(result);
 		
 	if(row != NULL)
 		printf("%s\n", row[0]);
 	else
-	printf("no");
+	printf("no");*/
+
+
+	int ret = mysql_query(&mysql,"insert into login_info values(NULL, \"coko\", \"1551\")");
+	if(ret < 0)
+		perror("query error");
 
 	mysql_close(&mysql);
 	mysql_library_end();
