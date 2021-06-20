@@ -12,6 +12,7 @@ int MaxValue(int N, int C, int[]v, int[]w)
         {
             int n = dp[i-1][j];
             int y = (j>=v[i] ? dp[i-1][j-v[j]]+w[i]:0);
+            dp[i][j] = n>y ? n:y;
         }
     }
     
