@@ -300,7 +300,14 @@ int find(char* param)
     DIR* dir;
     struct dirent* ptr;
     int ice = 0;
-    dir = opendir("/bin");readdir(dir);
+    dir = opendir("/bin");
+    while(ptr = readdir(dir))
+    {
+        if(strcmp(param, ptr->d_name) == 0)
+            return 1;
+    }
+    closedir(dir);
+    dir = opendir("/home/bx/桌面/ccc/bxx/linux_c");
     while(ptr = readdir(dir))
     {
         if(strcmp(param, ptr->d_name) == 0)
