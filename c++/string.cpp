@@ -4,7 +4,7 @@
 
 int main()
 {
-		std::string str1, str2， str3, str4;
+		std::string str1, str2, str3, str4;
 
 		getline(std::cin, str1);
 		getline(std::cin, str2);
@@ -14,6 +14,7 @@ int main()
 		
 		std::cout << str1.empty() << std::endl;
 		std::cout << str1.size() << " " << str2.size() << std::endl;
+		std::cout << ((str1 > str2)?str1:str2)<< std::endl;
 
 		str3 = str1+str2;
 		std::cout << "str3:" << str3 << std::endl;
