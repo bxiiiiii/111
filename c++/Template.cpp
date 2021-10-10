@@ -1,6 +1,9 @@
 #include <iostream>
 #include <iterator>
 #include <functional>
+#include <sstream>
+#include <vector>
+#include <cstring>
 
 using namespace std;
 
@@ -87,7 +90,7 @@ public:
 private:
     ostream &os;
 };
-
+/*
 namespace cp
 {
     template<typename T>
@@ -111,7 +114,7 @@ namespace cp
             {}
 
             explicit SharedPointer(T* raw_ptr)
-                    : ptr{ raw_ptr }, ref_count(new std::size_t(1)), deleter{ cp:: Delete{} }
+                    : ptr{ raw_ptr }, ref_count(new std::size_t(1)), deleter{ cp::Delete{} }
             {}
             
             SharedPointer(SharedPointer const& other)
@@ -218,9 +221,54 @@ namespace cp
                 ptr = nullptr;
             }
     };
+}*/
+
+
+
+
+template <typename T>
+int f(vector<T> vec, T tag)
+{
+    int count = 0;
+    for(auto i : vec)
+        if(tag == i)
+            count++;
+    return count;
+}
+
+template <> int f(vector<const char*> vec, const char* value)
+{
+    auto count = 0;
+    for(auto i : vec)
+        if(strcmp(value, i) == 0)
+            count++;
+    return count;
+}
+
+template <typename T> string debug_rep(T* t)
+{
+    ostringstream ret;
+    ret << t;
+    return ret.str();
+}
+
+template <> string debug_rep (const char* str)
+{
+    string ret(str);
+    return ret;
+}
+
+template <> string debug_rep(char* str)
+{
+    string ret(str);
+    return ret;
 }
 
 int main()
 {
+    int x = 123;
+    string str = debug_rep(&x);
+    cout << str << endl;
 
+    return 0;
 }
