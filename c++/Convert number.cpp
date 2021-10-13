@@ -1,3 +1,11 @@
+//273.Integer to English Words
+/*Convert a non-negative integer num to its English words representation.*/
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
 class Solution {
 public:
         vector<string> singles = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine"};
@@ -58,3 +66,13 @@ public:
         return str;
     }
 };
+
+int main()
+{
+    Solution item;
+    int num;
+    cin >> num;
+    item.numberToWords(num);
+
+    return 0;
+}
