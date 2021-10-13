@@ -4,6 +4,7 @@
 #include <sstream>
 #include <vector>
 #include <cstring>
+#include <iomanip>
 
 using namespace std;
 
@@ -270,5 +271,6 @@ int main()
     string str = debug_rep(&x);
     cout << str << endl;
 
+    cout << setw(8) << x << endl;
     return 0;
 }
