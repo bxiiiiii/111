@@ -23,3 +23,8 @@ public:
     }
 };
 
+class Solution2 {
+    void deleteNode(ListNode* node) {
+        *node = *node->next;
+    }
+};
