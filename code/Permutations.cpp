@@ -1,31 +1,32 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 class Solution {
  public:
+  vector<vector<int>> re;
   vector<vector<int>> permute(vector<int>& nums) {
-    vector<vector<int>> re;
-    for (int i = 0; i < nums.size(); i++) {
-      re.push_back({});
-      // for (int j = nums.size() - 1 - i; j < nums.size(); j++) {
-      //   re[i].push_back(nums[j]);
-      // }
-      // for (int m = 0; m < nums.size() - 1 - i; m++) {
-      //   re[i].push_back(nums[m]);
-      // }
-      for (int m = i; m < nums.size(); m++) {
-        re[i].push_back(nums[m]);
-      }
-      for (int k = 0; k < i; k++) {
-        re[i].push_back(nums[k]);
-      }
-    }
+    vector<int> trace;
+    backtrace(nums, trace);
     return re;
   }
+  void backtrace(vector<int>& nums, vector<int>& trace) {
+    if (trace.size() == nums.size()) {
+      re.push_back(trace);
+      return;
+    }
+    for (int i = 0; i < nums.size(); i++) {
+      if (count(trace.begin(), trace.end(), nums[i])) {
+        continue;
+      }
+      trace.push_back(nums[i]);
+      backtrace(nums, trace);
+      trace.pop_back();
+    }
+  }
 };
-
 int main() {
   Solution s;
   vector<int> vec{1, 2, 3};
