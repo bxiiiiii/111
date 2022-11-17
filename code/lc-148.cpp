@@ -55,3 +55,79 @@ class Solution {
     return head->next;
   }
 };
+
+class Solution2 {
+ public:
+  ListNode* sortList(ListNode* head) {
+    int size = 0;
+    ListNode* temp = head;
+    while (temp != nullptr) {
+      size++;
+      temp = temp->next;
+    }
+    ListNode* re = new ListNode(0, head);
+    for (int level = 1; level < size; level *= 2) {
+      ListNode *pre = re, *cur = re->next;
+      while (cur != nullptr) {
+        ListNode* head1 = cur;
+        for (int i = 1; i < level && cur->next != nullptr; i++) {
+          cur = cur->next;
+        }
+        ListNode* head2 = cur->next;
+        cur->next = nullptr;
+        cur = head2;
+        for (int i = 1; i < level && cur != nullptr && cur->next != nullptr;
+             i++) {
+          cur = cur->next;
+        }
+        ListNode* next = nullptr;
+        if (cur != nullptr) {
+          next = cur->next;
+          cur->next = nullptr;
+        }
+        ListNode* merged = merge(head1, head2);
+        pre->next = merged;
+        while (pre->next != nullptr) {
+          pre = pre->next;
+        }
+        cur = next;
+      }
+    }
+    return re->next;
+  }
+
+  ListNode* merge(ListNode* head1, ListNode* head2) {
+    ListNode* re = new ListNode(0);
+    ListNode *tem = re, *tem1 = head1, *tem2 = head2;
+    while (tem1 != nullptr && tem2 != nullptr) {
+      if (tem1->val <= tem2->val) {
+        tem->next = tem1;
+        tem1 = tem1->next;
+      } else {
+        tem->next = tem2;
+        tem2 = tem2->next;
+      }
+      tem = tem->next;
+    }
+    if (tem1 != nullptr) {
+      tem->next = tem1;
+    } else if (tem2 != nullptr) {
+      tem->next = tem2;
+    }
+    return tem->next;
+  }
+};
+
+int main() {
+  ListNode* head = new ListNode(4);
+  ListNode* tem = new ListNode(2);
+  ListNode* tem1 = new ListNode(1);
+  ListNode* tem2 = new ListNode(3);
+  head->next = tem;
+  tem->next = tem1;
+  tem1->next = tem2;
+  tem2->next = nullptr;
+  Solution2 s;
+  auto re = s.sortList(head);
+  return 0;
+}
